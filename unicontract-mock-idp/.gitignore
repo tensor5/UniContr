@@ -39,3 +39,4 @@ testem.log
 Thumbs.db
 /environments/environment.ts
 src/environments/environment.ts
+package-lock.json

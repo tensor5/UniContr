@@ -14,7 +14,7 @@ export class NgxLoadingComponent implements OnChanges {
   public spinnerName: string;
 
   constructor(private spinner: NgxSpinnerService) {
-    this.spinnerName = `ngx-loading-${crypto.randomUUID()}`;
+    this.spinnerName = `ngx-loading-${this.generateSpinnerId()}`;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -25,5 +25,14 @@ export class NgxLoadingComponent implements OnChanges {
         this.spinner.hide(this.spinnerName);
       }
     }
+  }
+
+  private generateSpinnerId(): string {
+    const browserCrypto = typeof crypto !== 'undefined' ? crypto : undefined;
+    if (browserCrypto?.randomUUID) {
+      return browserCrypto.randomUUID();
+    }
+
+    return `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
   }
 }

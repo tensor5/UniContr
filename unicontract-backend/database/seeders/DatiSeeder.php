@@ -39,23 +39,26 @@ class DatiSeeder extends Seeder
     
     private function insertOffice(Array $offices, $rolename){
         $role = Role::where('name', $rolename)->first();
+        $useOracle = !app()->environment('testing') && $this->oracleConnected();
+
         foreach ($offices as $office) {
             $mp = new MappingRuolo();
             $mp->unitaorganizzativa_uo = $office;
-             // Only try to read from Oracle in non-testing environments
-             if (!app()->environment('testing')) {
-                $uo = $mp->unitaorganizzativa()->get()->first();
-                if ($uo) {
-                    $mp->descrizione_uo = $uo->descr;
-                    $mp->role_id = $role->id;
-                    $mp->save();
+            $mp->descrizione_uo = "Fake descr for $office";
+
+            if ($useOracle) {
+                try {
+                    $uo = $mp->unitaorganizzativa()->first();
+                    if ($uo && !empty($uo->descr)) {
+                        $mp->descrizione_uo = $uo->descr;
+                    }
+                } catch (\Exception $e) {
+                    // Keep the fake description when Oracle is unavailable.
                 }
-            } else {
-                // Fake description for testing/CI
-                $mp->descrizione_uo = "Fake descr for $office";
-                $mp->role_id = $role->id;
-                $mp->save();
-            } 
+            }
+
+            $mp->role_id = $role->id;
+            $mp->save();
         }       
     }
 

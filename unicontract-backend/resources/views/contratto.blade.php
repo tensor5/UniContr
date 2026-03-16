@@ -51,7 +51,7 @@
   <div class="lastpage">
   
   <h4>CONTRATTO DI DIRITTO PRIVATO PER ATTIVITÀ DI INSEGNAMENTO 
-  <br>AI SENSI DELL'ART. 23, CO. 1, DELLA LEGGE 30/12/2010, N. 240</h4>
+  <br>AI SENSI DELL'ART. 23, DELLA LEGGE 30 DICEMBRE 2010, N. 240</h4>
     <h4>TRA</h4>
     <p class="normal">
         l'Università degli Studi di Urbino Carlo Bo, codice fiscale n. 82002850418, partita IVA n.

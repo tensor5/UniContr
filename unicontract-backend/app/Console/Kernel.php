@@ -28,7 +28,8 @@ class Kernel extends ConsoleKernel
         Commands\SearchData::class,
         Commands\CreaDossierFirmaIO::class,
         Commands\VerificaFirmaDigitaleCompletata::class,
-        Commands\UpdateCdsCod::class
+        Commands\UpdateCdsCod::class,
+        Commands\ReportSigningKpi::class,
     ];
 
     /**
