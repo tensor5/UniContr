@@ -1,0 +1,24 @@
+example.it, www.example.it {
+    route {
+        redir /public /public/
+
+        handle /public/* {
+            root * /var/www
+
+            @notStatic not file {path}
+            rewrite @notStatic /public/index.php
+
+            php_fastcgi backend:9000 {
+                root /var/www
+            }
+
+            file_server
+        }
+
+        handle {
+            root * /usr/share/caddy/frontend
+            try_files {path} {path}/ /index.html
+            file_server
+        }
+    }
+}

@@ -42,6 +42,7 @@ services:
       - ../unicontract-mock-idp/start.js:/usr/src/app/start.js
     command: bash -c "node start.js"
 
+  # Comment this out to use Caddy instead of Nginx for out of the box HTTPS support
   nginx:
     build:
       context: ../unicontract-frontend
@@ -58,6 +59,30 @@ services:
       - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
+
+  # Comment this out to use Nginx instead of Caddy
+  # caddy:
+  #   build:
+  #     context: ../unicontract-frontend
+  #     dockerfile: ../unicontract-docker/docker-compose/caddy/Dockerfile
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #     - "443:443/udp"
+  #   volumes:
+  #     - ../unicontract-backend:${BASE_PATH}
+  #     - ./docker-compose/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app-network
+  #   restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:
 
 networks:
   app-network:
